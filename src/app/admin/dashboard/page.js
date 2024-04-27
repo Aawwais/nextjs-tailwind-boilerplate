@@ -1,6 +1,5 @@
 "use client";
-import { logoutUser } from "@/store/auth/authSlice";
-import { decrement, increment } from "@/store/portfolio/porfolioSlice";
+import { decrement, increment, logout } from "@/store/actions/authAction";
 import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,24 +7,27 @@ import { toast } from "react-toastify";
 
 const page = () => {
   let dispatch = useDispatch();
-  let { counter } = useSelector((state) => state.portfolio);
+  let { counter } = useSelector((state) => state.user);
+  console.log(counter);
   const handelIncrement = () => {
-    dispatch(increment());
+    let count = counter + 1;
+    dispatch(increment(count));
   };
 
   const handleDecrement = () => {
-    dispatch(decrement());
+    let count = counter - 1;
+    dispatch(decrement(count));
   };
   let handleToast = () => {
     toast.success("Hello");
   };
-  let logout = () => {
-    dispatch(logoutUser());
+  let logoutUser = () => {
+    dispatch(logout());
   };
   return (
     <div className="flex flex-col items-center justify-center h-screen home">
       <h1 className="text-3xl font-bold mb-4">Counter App</h1>
-      <button onClick={logout}>Logout</button>
+      <button onClick={logoutUser}>Logout</button>
       <div className="flex items-center mb-4">
         <button
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
